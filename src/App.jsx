@@ -1,18 +1,11 @@
-import Persons from "./components/Persons/Persons";
-import PersonForm from "./components/PersonForm/PersonForm";
 import Filter from "./components/Filter/Filter";
 
-const App = ({ persons }) => {
-  
-  
- 
-
+const App = () => {
   return (
     <>
-      <Filter persons={persons} />
+      <Filter />
     </>
   );
 };
 
 export default App;
-
