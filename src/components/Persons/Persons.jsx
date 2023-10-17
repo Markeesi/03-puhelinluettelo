@@ -1,4 +1,6 @@
-const Persons = ({ filteredPersons }) => {
+const Persons = ({ filteredPersons, onDeleteButtonClicked }) => {
+
+
   return (
     <>
       <h3>Numbers</h3>
@@ -6,6 +8,7 @@ const Persons = ({ filteredPersons }) => {
         <section key={person.id}>
           <p>
             {person.name} {person.number}
+            <button onClick={() => onDeleteButtonClicked(person)}>Delete</button>
           </p>
         </section>
       ))}

@@ -1,22 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import personService from "../../services/persons";
 
-const PersonForm = ({ persons: initialPersons, onPersonAdded }) => {
-  const [persons, setPersons] = useState([]); // Remove the curly braces
+const PersonForm = ({ onPersonAdded, onPersonUpdated }) => {
   const [newNumber, setNewNumber] = useState("");
   const [newName, setNewName] = useState("");
 
   const addNewContact = (event) => {
     event.preventDefault();
-    if (
-      (persons.some((person) => person.name === newName) &&
-        person.number.length === 10) ||
-      persons.some((person) => person.number === newNumber)
-    ) {
-      alert(
-        `${newName} already exists in the phonebook or phonenumber is invalid length or the entered phonenumber already exists.`
-      );
-    } else {
+    personService.getAll().then((persons) => {
+      const existingPerson = persons.find((person) => person.name === newName);
+
+      if (existingPerson) {
+        if (window.confirm(`${newName} is already in the phonebook. Do you want to update their number?`)) {
+          const updatedContact = { ...existingPerson, number: newNumber };
+          personService
+            .update(existingPerson.id, updatedContact)
+            .then(() => {
+              // Fetch the updated list of persons
+              personService.getAll().then((returnedPersons) => {
+                onPersonUpdated(returnedPersons);
+                setNewName("");
+                setNewNumber("");
+              });
+            })
+            .catch((error) => {
+              console.error("Error updating the person:", error);
+            });
+        }
+      } else if (newNumber.length === 11 && !persons.some((person) => person.number === newNumber)) {
       console.log("Adding a new contact...");
       const newContact = {
         name: newName,
@@ -28,7 +39,10 @@ const PersonForm = ({ persons: initialPersons, onPersonAdded }) => {
         setNewName("");
         setNewNumber("");
       });
+    } else {
+      alert(`Invalid phone number or the entered phone number already exists.`);
     }
+  });
   };
 
   return (

@@ -37,14 +37,37 @@ const Filter = () => {
     setPersons([...persons, newPerson]);
   };
 
+  const handlePersonUpdate = (updatedPersons) => {
+    setPersons([...updatedPersons])
+  }
+
+  const deleteButtonHandler = (person) => {
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService.deletePerson(person.id)
+      .then(() => { 
+       personService
+      .getAll()
+      .then((returnedPersons) => {
+        console.log("Data retrieved:", returnedPersons);
+        setPersons(returnedPersons);
+      })})
+      .catch((error) => {
+        console.error("Error in deleting the person:", error);
+      })
+    }
+
+  }
+
+
+
   return (
     <>
       <h2>Phonebook</h2>
       <div>
         filter shown with <input value={searchValue} onChange={searchHandler} />
       </div>
-      <PersonForm initialPersons={persons} onPersonAdded={handlePersonAdded} />
-      <Persons filteredPersons={filteredPersons} />
+      <PersonForm allPersons={persons} onPersonUpdated={handlePersonUpdate} onPersonAdded={handlePersonAdded} />
+      <Persons filteredPersons={filteredPersons} onDeleteButtonClicked={deleteButtonHandler} />
     </>
   );
 };
