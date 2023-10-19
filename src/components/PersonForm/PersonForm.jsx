@@ -2,7 +2,7 @@ import { useState } from "react";
 import personService from "../../services/persons";
 import Notification from "../Notification/Notification";
 
-const PersonForm = ({ onPersonAdded, onPersonUpdated }) => {
+const PersonForm = ({ onPersonAdded, onPersonUpdated}) => {
   const [newNumber, setNewNumber] = useState("");
   const [newName, setNewName] = useState("");
   const [notification, setNotification] = useState(null);
@@ -43,7 +43,7 @@ const PersonForm = ({ onPersonAdded, onPersonUpdated }) => {
               }, 3000);
             });
         }
-      } else if (newNumber.length === 11 && !persons.some((person) => person.number === newNumber)) {
+      } else if (newNumber.length >= 11 && !persons.some((person) => person.number === newNumber)) {
         console.log("Adding a new contact...");
         const newContact = {
           name: newName,
@@ -81,7 +81,7 @@ const PersonForm = ({ onPersonAdded, onPersonUpdated }) => {
   };
 
   return (
-    <>
+    <div className="personForm">
       <h3>add a new</h3>
       {notification && <Notification type={notificationType} message={notification} />}
       <form onSubmit={addNewContact}>
@@ -99,7 +99,7 @@ const PersonForm = ({ onPersonAdded, onPersonUpdated }) => {
           <button type="submit">add</button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

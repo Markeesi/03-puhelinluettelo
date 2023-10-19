@@ -17,6 +17,10 @@ h2 {
 }
 
 .personForm {
+    font-size: 2rem;
+}
+
+.personForm form {
     font-size: 1.6rem;
 }
 

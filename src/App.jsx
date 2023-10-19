@@ -4,23 +4,9 @@ import personService from "./services/persons";
 import "./index.css";
 
 const App = () => {
-  const [persons, setPersons] = useState([]);
-
-  useEffect(() => {
-    console.log("Effect: Fetching data...");
-    personService
-      .getAll()
-      .then((returnedPersons) => {
-        console.log("Data retrieved:", returnedPersons);
-        setPersons(returnedPersons);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
 
   return (
-    <Filter persons={persons} setPersons={setPersons} />
+    <Filter  />
   );
 };
 

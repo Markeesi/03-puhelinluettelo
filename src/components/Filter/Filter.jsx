@@ -9,6 +9,8 @@ const Filter = () => {
   const [persons, setPersons] = useState([]);
   const [notification, setNotification] = useState(null);
   const [notificationType, setNotificationType] = useState("success");
+  const [updateTrigger, setUpdateTrigger] = useState(false);
+
 
   useEffect(() => {
     console.log("Effect: Fetching data...");
@@ -22,7 +24,7 @@ const Filter = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [updateTrigger]);
   console.log("render", persons.length, "persons");
 
   const searchHandler = (event) => {
@@ -31,18 +33,24 @@ const Filter = () => {
   };
 
   const filteredPersons = useMemo(() => {
-    return persons.filter((person) =>
-      person.name && person.name.toLowerCase().includes(searchValue.toLowerCase())
+    return persons.filter(
+      (person) =>
+        person.name &&
+        person.number &&
+        person.name.toLowerCase().includes(searchValue.toLowerCase())
     );
   }, [searchValue, persons]);
-  
 
   const handlePersonAdded = (newPerson) => {
     setPersons([...persons, newPerson]);
   };
 
   const handlePersonUpdate = (updatedPerson) => {
-    setPersons([...persons, updatedPerson]);
+    const updatedPersons = persons.map((person) =>
+      person.id === updatedPerson.id ? updatedPerson : person
+    );
+    setPersons(updatedPersons);
+    setUpdateTrigger((prev) => !prev);
   };
 
   const deleteButtonHandler = (person) => {
@@ -87,12 +95,14 @@ const Filter = () => {
       <div className="filter">
         filter shown with <input value={searchValue} onChange={searchHandler} />
       </div>
-      <PersonForm className="personForm"
+      <PersonForm
+        className="personForm"
         allPersons={persons}
         onPersonUpdated={handlePersonUpdate}
         onPersonAdded={handlePersonAdded}
       />
-      <Persons className="person" 
+      <Persons
+        className="person"
         filteredPersons={filteredPersons}
         onDeleteButtonClicked={deleteButtonHandler}
       />
