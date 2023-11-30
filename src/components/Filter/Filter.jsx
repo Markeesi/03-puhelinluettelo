@@ -29,7 +29,7 @@ const Filter = () => {
 
   const searchHandler = (event) => {
     console.log("Search input value:", event.target.value);
-    setSearchValue(event.target.value);
+    setSearchValue(event.target.value.length > 3   ? event.target.value : searchValue );
   };
 
   const filteredPersons = useMemo(() => {
