@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
   headers: {
     "Cache-Control": "no-cache",
     "Content-Type": "application/x-www-form-urlencoded",
-    "Access-Control-Allow-Origin": "*",
+   // "Access-Control-Allow-Origin": "*",
   }
 });
 
