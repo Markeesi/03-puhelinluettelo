@@ -28,9 +28,12 @@ const Filter = () => {
   console.log("render", persons.length, "persons");
 
   const searchHandler = (event) => {
-    console.log("Search input value:", event.target.value);
-    setSearchValue(event.target.value.length > 0 ? event.target.value : searchValue );
+    const inputValue = event.target.value;
+    console.log("Search input value:", inputValue);
+  
+    setSearchValue(inputValue); // Always update the searchValue with the current input value
   };
+  
 
   const filteredPersons = useMemo(() => {
     return persons.filter(
