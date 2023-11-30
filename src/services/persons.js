@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://my-json-server.typicode.com/Markeesi/puhelinluettelo-api/persons";
+const baseUrl = "https://expressphonebook.azurewebsites.net/api/persons";
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,
