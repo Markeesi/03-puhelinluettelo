@@ -1,6 +1,6 @@
 import axios from "axios";
 // const baseUrl = "http://localhost:3001/persons";
-const baseUrl = "https://my-json-server.typicode.com/Markeesi/puhelinluettelo-api/";
+const baseUrl = "https://my-json-server.typicode.com/Markeesi/puhelinluettelo-api/persons";
 
 
 const getAll = () => {
