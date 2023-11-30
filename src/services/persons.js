@@ -4,7 +4,12 @@ const baseUrl = "https://my-json-server.typicode.com/Markeesi/puhelinluettelo-ap
 
 
 const getAll = () => {
-  const request = axios.get(baseUrl);
+  const request = axios.get(baseUrl,  {
+    headers: {
+      "Cache-Control": "no-cache",
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Access-Control-Allow-Origin": "*",
+    },})
   return request.then((response) => response.data);
 };
 
